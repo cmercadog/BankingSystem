@@ -8,6 +8,11 @@ import java.util.Set;
  */
 public class Bank {
 
+    /**
+     * Key: represents the account number.
+     * Value: represents the balance.
+     */
+
     private HashMap<Integer, Integer> accounts;
     private int nextAccount;
     private double interestRate;
@@ -69,11 +74,11 @@ public class Bank {
      * @return whether the interest payment process was successful or not
      */
     public boolean  payInterest() {
-        Set<Integer> accountIndetifiers = accounts.keySet();
-        for (int indetifier : accountIndetifiers) {
-            int balance = accounts.get(indetifier);
+        Set<Integer> accountNumbers = accounts.keySet();
+        for (int accountNumber : accountNumbers) {
+            int balance = accounts.get(accountNumber);
             int newbalance = (int) (balance * (1 + interestRate));
-            accounts.put(indetifier, newbalance);
+            accounts.put(accountNumber, newbalance);
         }
        return true;
     }
@@ -81,11 +86,14 @@ public class Bank {
     @Override
     public String toString() {
         StringBuilder accountsAsText = new StringBuilder();
-        Set<Integer> accountIndetifiers = accounts.keySet();
+        Set<Integer> accountNumbers = accounts.keySet();
 
-        accountsAsText.append("The bank has " + accountIndetifiers.size() + " accounts.");
-        for (int indentifier : accountIndetifiers)
-            accountsAsText.append( System.lineSeparator()+"\tAccount " + indentifier + ": balance=" + accounts.get(indentifier));
+        accountsAsText.append("The bank has " + accountNumbers.size() + " accounts.");
+        for (int accountNumber : accountNumbers)
+            accountsAsText
+                  .append( System.lineSeparator())
+                  .append("\tAccount ").append(accountNumber)
+                  .append(": balance=").append(accounts.get(accountNumber));
          
         return accountsAsText.toString();
     }

@@ -15,6 +15,7 @@ public class BankClient {
 
     public BankClient() {
         done = false;
+        currentAccount = 0;
        
     }
 
