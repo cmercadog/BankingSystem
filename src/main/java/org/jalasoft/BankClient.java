@@ -25,9 +25,14 @@ public class BankClient {
         bankServices = new BankService();
         scanner = new Scanner(System.in);
         while (!done) {
-            System.out.print("Enter command (0=quit, 1=new, 2=select, 3=deposit, 4=loan, 5=show, 6=interest): ");
+            System.out.print("Enter command (0=quit, 1=new, 2=select, 3=deposit, 4=loan, 5=show, 6=interest, 7=withdraw): ");
             int commandNumber = scanner.nextInt();
-            processCommand(commandNumber);
+            
+            try {
+                processCommand(commandNumber);
+            } catch (IllegalArgumentException exception) {
+                System.out.println(exception.getMessage());
+            }
         }
         scanner.close();
     }
@@ -51,6 +56,8 @@ public class BankClient {
             showAll();
         else if (commandNumber == 6)
             addInterest();
+        else if (commandNumber == 7)
+            withdraw();
         else
             System.out.println("Illegal command");
     }
@@ -61,11 +68,9 @@ public class BankClient {
     }
 
     private void newAccount() {
-        int accountNumber = bankServices.newAccount(); //delegates the work to the appropriate class
-
-        // Own logic
-
-        currentAccount = accountNumber;
+        System.out.println("Specify the origin of the account (Local, Rural, Foreign): ");
+        String accountOriginAsString = scanner.next();        
+        currentAccount = bankServices.newAccount(accountOriginAsString);
         System.out.println("Your new account number is: " + currentAccount);
     }
 
@@ -99,5 +104,12 @@ public class BankClient {
 
     private void addInterest() {
         bankServices.payInterest();
+    }
+
+    private void withdraw(){
+        System.out.println("Enter withdraw amount: ");
+        int amountWithdraw = scanner.nextInt();
+        bankServices.withdraw(currentAccount, amountWithdraw);
+
     }
 }

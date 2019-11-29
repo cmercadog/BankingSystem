@@ -8,18 +8,17 @@ public class BankAccount {
     private int accountNumber;
     private AccountOrigin accountOrigin;
     private int balance;
-    
 
- 
     /**
+     * Create a new account with 0 balance
+     * 
      * @param accountNumber the unique identifier for a bank account
-     * @param AccountOrigin represent where the account was created
+     * @param accountOrigin represent where the account was created
      */
     public BankAccount(int accountNumber, AccountOrigin accountOrigin) {
         this.accountNumber = accountNumber;
         this.accountOrigin = accountOrigin;
         this.balance = 0;
-        
     }
 
     /**
@@ -47,31 +46,18 @@ public class BankAccount {
 
     /**
      * This increase the amount of the balance applying the following restrictions:
+     *  The amount must be greater than 0
      * 
      * @param amount the amount that will be increased
+     * @throws IllegalArgumentException will be throw if the amount is less or equals than 0
      */
-    public boolean deposit(int amount) {
+    public void deposit(int amount) throws IllegalArgumentException {
         if (amount <= 0) {
-            throw new IllegalArgumentException("The deposit amount must be greater than 0.");
+            throw new IllegalArgumentException("The deposit amount must be greater than 0");
         }
 
         balance += amount;
-        return true;
     }
-
-    /**
-     * Will check if the amount can be supported by the current balance
-     * 
-     * <<explain how the check will be performed>>
-     * 
-     * @param amount the amount to check
-     * @return wether the amount is supported or not
-     */
-    public boolean hasEnoughCollateral(int amount) {
-
-        return balance >= amount / 2;
-    }
-
 
     /**
      * This decrease the amount of the balance applying the following restrictions:
@@ -79,10 +65,44 @@ public class BankAccount {
      * 
      * @param amount the amount that will be decrease
      */
-    public boolean withdraw(int amount) {
+    public void withdraw(int amount) throws IllegalArgumentException {
+      /*   if (amount <= 0) {
+            throw new IllegalArgumentException("The amount to withdraw must be greater than 0.");
+        }
 
-        balance -= amount;
-        return true;
+       if (amount > balance) {
+            throw new ArithmeticException("Cannot withdraw amounts greater than the actual balance: " + getBalance());
+        }*/
+
+        
+      
+        try {
+            if (amount <= 0) {
+                throw new IllegalArgumentException("The amount to withdraw must be greater than 0.");
+            }
+            if (amount > balance) {
+                throw new ArithmeticException("Cannot withdraw amounts greater than the actual balance: " + getBalance());}
+            
+                balance -= amount;
+           
+        } catch (ArithmeticException exception) {
+            System.out.println(exception.getMessage());
+        } 
+      
+
+      
+
+    }
+
+    /**
+     * Will check if the amount can be supported by the current balance 
+     * by checking if the loan amount divided by 2 is less or equals to current balance
+     * 
+     * @param amount the amount to check
+     * @return wether the amount is supported or not
+     */
+    public boolean hasEnoughCollateral(int amount) {
+        return amount > 0 && balance >= amount / 2;
     }
 
     /**
@@ -99,8 +119,4 @@ public class BankAccount {
     public boolean changeAccount(AccountOrigin AccountOrigin) {
         return false;
     }
-
-
-
-
 }
