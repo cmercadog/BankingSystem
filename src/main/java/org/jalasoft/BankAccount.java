@@ -66,17 +66,7 @@ public class BankAccount {
      * @param amount the amount that will be decrease
      */
     public void withdraw(int amount) throws IllegalArgumentException {
-      /*   if (amount <= 0) {
-            throw new IllegalArgumentException("The amount to withdraw must be greater than 0.");
-        }
-
-       if (amount > balance) {
-            throw new ArithmeticException("Cannot withdraw amounts greater than the actual balance: " + getBalance());
-        }*/
-
-        
       
-        try {
             if (amount <= 0) {
                 throw new IllegalArgumentException("The amount to withdraw must be greater than 0.");
             }
@@ -85,12 +75,7 @@ public class BankAccount {
             
                 balance -= amount;
            
-        } catch (ArithmeticException exception) {
-            System.out.println(exception.getMessage());
-        } 
-      
-
-      
+            
 
     }
 

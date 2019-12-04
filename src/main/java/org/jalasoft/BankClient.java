@@ -30,7 +30,7 @@ public class BankClient {
             
             try {
                 processCommand(commandNumber);
-            } catch (IllegalArgumentException exception) {
+            } catch (IllegalArgumentException | ArithmeticException exception) {
                 System.out.println(exception.getMessage());
             }
         }
